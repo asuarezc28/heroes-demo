@@ -1,0 +1,67 @@
+<div class="container-search">
+  <form
+    class="example-form"
+    #searchForm="ngForm"
+    (ngSubmit)="onSubmit(searchForm)"
+  >
+    <div class="search-container">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="openDialog(true)"
+      >
+        +
+      </button>
+      <mat-form-field class="example-full-width">
+        <mat-label>Search...</mat-label>
+        <!--<input matInput placeholder="Ex. monitor" name="searchTerm" ngModel /> -->
+        <input matInput type="text" #searchInput />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="search(searchInput.value)"
+      >
+        Search
+      </button>
+      <!--- <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="search()"
+      >
+        Search
+      </button> -->
+    </div>
+  </form>
+</div>
+
+<div class="container">
+  @if (!isLoading) {
+  <mat-spinner></mat-spinner>
+  } @else { @for (heroe of heroes; track heroe.id) {
+  <mat-card (click)="navigateToDetailPage(heroe)" class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{ heroe.name }}</mat-card-title>
+      <mat-card-subtitle>{{ heroe.alias }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="heroe?.image" alt="{{ heroe?.alt }}" />
+    <mat-card-content> </mat-card-content>
+    <mat-card-actions>
+      <button (click)="openDialog(false, heroe?.id)" mat-button>EDIT</button>
+      <button mat-button (click)="deleteHeroe(heroe?.id)">DELETE</button>
+    </mat-card-actions>
+  </mat-card>
+  }@empty {
+  <span>No se encontraron resultados</span>
+  } }
+</div>
+
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="itemsPerPage"
+  [pageSizeOptions]="[5, 10, 15]"
+  (page)="onPageChange($event)"
+></mat-paginator>

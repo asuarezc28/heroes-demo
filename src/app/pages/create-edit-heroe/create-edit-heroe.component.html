@@ -1,0 +1,23 @@
+ <form [formGroup]="heroesForm">
+    <mat-form-field>
+      <mat-label>Name:</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Alias:</mat-label>
+      <input matInput formControlName="alias" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Power:</mat-label>
+      <input matInput formControlName="power" />
+    </mat-form-field>
+  </form>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    (click)="submitForm()"
+  >
+    Accept
+  </button>
