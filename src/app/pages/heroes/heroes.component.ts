@@ -10,11 +10,12 @@ import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterOutlet } from '@angular/router';
+import { CreateEditHeroeComponent } from '../create-edit-heroe/create-edit-heroe.component';
 
 @Component({
   selector: 'app-heroes',
   standalone: true,
-  imports: [SharedModule, FormsModule, MatCardModule, HttpClientModule, MatDialogModule, EditModalComponent, MatPaginatorModule, MatProgressSpinnerModule, RouterOutlet],
+  imports: [SharedModule, CreateEditHeroeComponent, FormsModule, MatCardModule, HttpClientModule, MatDialogModule, EditModalComponent, MatPaginatorModule, MatProgressSpinnerModule, RouterOutlet],
   providers: [HeroesService, HttpClient],
   templateUrl: './heroes.component.html',
   styleUrl: './heroes.component.css'
@@ -48,11 +49,22 @@ export class HeroesComponent {
   }
 
 
-  openDialog(isCreate: boolean, id?: any): void {
+  createOrEditHero(isCreate: boolean, id?: any): void {
     if (isCreate) {
       this.router.navigate(['/heroe', { type: 'create' }]);
     } else {
-      this.router.navigate(['/heroe', { type: 'edit', id: id }]);
+      const selectedHero = this.originalHeroesList.find((hero: { id: any; }) => hero.id === id);
+      if (selectedHero) {
+        this.heroesService.selectHero(selectedHero);
+        this.heroesService.selectedHero$.subscribe(hero => {
+          if (hero) {
+            console.log('hh', hero);
+          }
+        });
+        this.router.navigate(['/heroe', { type: 'edit', id: id }]);
+      } else {
+        console.error('Héroe no encontrado');
+      }
     }
   }
 
@@ -64,7 +76,6 @@ export class HeroesComponent {
         this.heroesService.deleteHero(heroeId);
       }
     }); dialogRef.componentInstance
-
   }
 
 

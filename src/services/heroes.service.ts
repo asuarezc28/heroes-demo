@@ -11,6 +11,8 @@ export class HeroesService {
   heroes$ = this.heroes.asObservable();
   private isLoading = new BehaviorSubject<boolean>(true);
   isLoading$ = this.isLoading.asObservable();
+  private selectedHero = new BehaviorSubject<any>({});
+  selectedHero$ = this.selectedHero.asObservable();
   heroesList: any[] = [];
   filteredHeroesList: any[] = [];
   constructor(private http: HttpClient) {
@@ -127,64 +129,64 @@ export class HeroesService {
   }
 
 
- // getHeroesFromServer(): void {
-    //this.http.get<any>('https://apimocha.com/angularheroes/heroes').subscribe(resp => {
-      //this.heroesList = resp?.heroes;
-      //this.filteredHeroesList = [...this.heroesList];
-      //this.heroes.next(this.heroesList);
-    //});
+  // getHeroesFromServer(): void {
+  //this.http.get<any>('https://apimocha.com/angularheroes/heroes').subscribe(resp => {
+  //this.heroesList = resp?.heroes;
+  //this.filteredHeroesList = [...this.heroesList];
+  //this.heroes.next(this.heroesList);
+  //});
   //}
 
   //getHeroesFromServer_(): void {
-    //const storedHeroesList = localStorage.getItem('heroesList');
-    //if (storedHeroesList) {
-      //this.heroesList = JSON.parse(storedHeroesList);
-      //this.heroes.next(this.heroesList);
-    //} else {
-      //this.heroesList = this.her.heroes;
-      //this.filteredHeroesList = [...this.heroesList];
-      //this.heroes.next(this.heroesList);
-      //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
-    //}
+  //const storedHeroesList = localStorage.getItem('heroesList');
+  //if (storedHeroesList) {
+  //this.heroesList = JSON.parse(storedHeroesList);
+  //this.heroes.next(this.heroesList);
+  //} else {
+  //this.heroesList = this.her.heroes;
+  //this.filteredHeroesList = [...this.heroesList];
+  //this.heroes.next(this.heroesList);
+  //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
+  //}
   //}
 
   //setLoading(isLoading: boolean) {
-    //this.isLoading.next(isLoading);
+  //this.isLoading.next(isLoading);
   //}
 
   //editHeroe(heroeToModify: any) {
-    //const storedHeroesList = localStorage.getItem('heroesList');
-    //if (storedHeroesList) {
-      //this.heroesList = JSON.parse(storedHeroesList);
-    //}
-    //const updatedHeroes = this.heroesList.map(hero =>
-      //hero.id === heroeToModify.id ? heroeToModify : hero
-    //);
-    //this.heroesList = updatedHeroes;
-    //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
-    //this.heroes.next([...this.heroesList]);
+  //const storedHeroesList = localStorage.getItem('heroesList');
+  //if (storedHeroesList) {
+  //this.heroesList = JSON.parse(storedHeroesList);
+  //}
+  //const updatedHeroes = this.heroesList.map(hero =>
+  //hero.id === heroeToModify.id ? heroeToModify : hero
+  //);
+  //this.heroesList = updatedHeroes;
+  //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
+  //this.heroes.next([...this.heroesList]);
   //}
 
   //deleteHero(heroId: number) {
-     //const storedHeroesList = localStorage.getItem('heroesList');
-    //if (storedHeroesList) {
-      //this.heroesList = JSON.parse(storedHeroesList);
-    //}
-    //const updatedHeroes = this.heroesList.filter(hero => hero.id !== heroId);
-    //this.heroesList = [...updatedHeroes];
-    //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
-    //this.heroes.next([...this.heroesList]);
+  //const storedHeroesList = localStorage.getItem('heroesList');
+  //if (storedHeroesList) {
+  //this.heroesList = JSON.parse(storedHeroesList);
+  //}
+  //const updatedHeroes = this.heroesList.filter(hero => hero.id !== heroId);
+  //this.heroesList = [...updatedHeroes];
+  //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
+  //this.heroes.next([...this.heroesList]);
   //}
 
   //createHeroe(newHeroe: any) {
-     //const storedHeroesList = localStorage.getItem('heroesList');
-    //if (storedHeroesList) {
-      //this.heroesList = JSON.parse(storedHeroesList);
-    //}
-    //const newHeroeWithId = { ...newHeroe, id: this.heroesList.length + 1 };
-    //this.heroesList = [...this.heroesList, newHeroeWithId];
-    //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
-    //this.heroes.next([...this.heroesList]);
+  //const storedHeroesList = localStorage.getItem('heroesList');
+  //if (storedHeroesList) {
+  //this.heroesList = JSON.parse(storedHeroesList);
+  //}
+  //const newHeroeWithId = { ...newHeroe, id: this.heroesList.length + 1 };
+  //this.heroesList = [...this.heroesList, newHeroeWithId];
+  //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
+  //this.heroes.next([...this.heroesList]);
   //}
 
   getHeroesFromServer(): void {
@@ -238,5 +240,15 @@ export class HeroesService {
     this.heroesList = heroes;
     this.updateHeroesList(heroes);
   }
+
+  selectHero(hero: any) {
+    debugger;
+    this.selectedHero.next(hero);
+  }
+
+  clearSelectedHero() {
+    this.selectedHero.next(null);
+  }
+
 
 }

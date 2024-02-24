@@ -8,11 +8,12 @@ import { SharedModule } from '../../../shared/shared.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { HeroesService } from '../../../services/heroes.service';
+import { HeroesComponent } from '../heroes/heroes.component';
 
 @Component({
   selector: 'app-create-edit-heroe',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, ReactiveFormsModule, SharedModule, HttpClientModule],
+  imports: [CommonModule, HeroesComponent, MatDialogModule, MatButtonModule, ReactiveFormsModule, SharedModule, HttpClientModule],
   providers: [HttpClient, HeroesService],
   templateUrl: './create-edit-heroe.component.html',
   styleUrl: './create-edit-heroe.component.css'
@@ -44,7 +45,15 @@ export class CreateEditHeroeComponent {
 
 
   ngOnInit(): void {
-    //let name = this.route.snapshot.paraMap.get('name');
+    this.heroesService.selectedHero$.subscribe(hero => {
+      if (hero) {
+        this.heroesForm.patchValue({
+          name: hero.name,
+          alias: hero.alias,
+          power: hero.power
+        });
+      }
+    });
   }
 
   submitForm(): void {
@@ -68,12 +77,10 @@ export class CreateEditHeroeComponent {
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0] ?? null;
-    console.log('selected file', this.selectedFile);
     const reader = new FileReader();
     reader.readAsArrayBuffer(this.selectedFile);
     reader.onload = () => {
       const blob = new Blob([reader.result as ArrayBuffer], { type: this.selectedFile.type });
-      console.log('bb', blob);
       this.blobImg = blob;
     };
   }
