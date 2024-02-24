@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedModule } from '../../../shared/shared.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -13,7 +12,7 @@ import { HeroesComponent } from '../heroes/heroes.component';
 @Component({
   selector: 'app-create-edit-heroe',
   standalone: true,
-  imports: [CommonModule, HeroesComponent, MatDialogModule, MatButtonModule, ReactiveFormsModule, SharedModule, HttpClientModule],
+  imports: [CommonModule, HeroesComponent,  MatButtonModule, ReactiveFormsModule, SharedModule, HttpClientModule],
   providers: [HttpClient, HeroesService],
   templateUrl: './create-edit-heroe.component.html',
   styleUrl: './create-edit-heroe.component.css'
@@ -47,6 +46,7 @@ export class CreateEditHeroeComponent {
   ngOnInit(): void {
     this.heroesService.selectedHero$.subscribe(hero => {
       if (hero) {
+        console.log('HHHEREO', hero);
         this.heroesForm.patchValue({
           name: hero.name,
           alias: hero.alias,

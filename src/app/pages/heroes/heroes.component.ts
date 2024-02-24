@@ -5,7 +5,6 @@ import { MatCardModule } from '@angular/material/card';
 import { HeroesService } from '../../../services/heroes.service';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { EditModalComponent } from '../../../shared/components/edit-modal/edit-modal.component';
 import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -15,7 +14,7 @@ import { CreateEditHeroeComponent } from '../create-edit-heroe/create-edit-heroe
 @Component({
   selector: 'app-heroes',
   standalone: true,
-  imports: [SharedModule, CreateEditHeroeComponent, FormsModule, MatCardModule, HttpClientModule, MatDialogModule, EditModalComponent, MatPaginatorModule, MatProgressSpinnerModule, RouterOutlet],
+  imports: [SharedModule, CreateEditHeroeComponent, FormsModule, MatCardModule, HttpClientModule, MatDialogModule, MatPaginatorModule, MatProgressSpinnerModule, RouterOutlet],
   providers: [HeroesService, HttpClient],
   templateUrl: './heroes.component.html',
   styleUrl: './heroes.component.css'

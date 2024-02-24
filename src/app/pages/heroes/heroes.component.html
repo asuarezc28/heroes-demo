@@ -1,8 +1,5 @@
 <div class="container-search">
-  <form
-    class="example-form"
-    #searchForm="ngForm"
-  >
+  <form class="example-form" #searchForm="ngForm">
     <div class="search-container">
       <button
         mat-raised-button
@@ -39,15 +36,14 @@
     </mat-card-header>
     <img mat-card-image [src]="heroe?.image" alt="{{ heroe?.alt }}" />
     <mat-card-content> </mat-card-content>
-<mat-card-actions>
-  <button (click)="createOrEditHero(false, heroe?.id)" mat-button>
-    <mat-icon>create</mat-icon> 
-  </button>
-  <button mat-button (click)="deleteHeroe(heroe?.id)">
-    <mat-icon>delete</mat-icon> 
-  </button>
-</mat-card-actions>
-
+    <mat-card-actions>
+      <button (click)="createOrEditHero(false, heroe?.id)" mat-button>
+        <mat-icon>create</mat-icon>
+      </button>
+      <button mat-button (click)="deleteHeroe(heroe?.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
   </mat-card>
   }@empty {
   <span>No se encontraron resultados</span>
