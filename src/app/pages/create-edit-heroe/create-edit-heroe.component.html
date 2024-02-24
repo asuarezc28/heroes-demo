@@ -1,23 +1,31 @@
- <form [formGroup]="heroesForm">
-    <mat-form-field>
-      <mat-label>Name:</mat-label>
-      <input matInput formControlName="name" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Alias:</mat-label>
-      <input matInput formControlName="alias" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Power:</mat-label>
-      <input matInput formControlName="power" />
-    </mat-form-field>
-  </form>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button
-    mat-button
-    [mat-dialog-close]="true"
-    cdkFocusInitial
-    (click)="submitForm()"
-  >
-    Accept
-  </button>
+<h2>{{ title }} Heroe</h2>
+<form [formGroup]="heroesForm">
+  <mat-form-field>
+    <mat-label>Name:</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Alias:</mat-label>
+    <input matInput formControlName="alias" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Power:</mat-label>
+    <input matInput formControlName="power" />
+  </mat-form-field>
+</form>
+<button type="button" mat-raised-button (click)="fileInput.click()">
+  Choose File
+</button>
+<input hidden (change)="onFileSelected($event)" #fileInput type="file" />
+<span class="file-name">{{ selectedFile?.name }}</span>
+<button mat-button mat-dialog-close (click)="cancel()">Cancel</button>
+<button
+  mat-button
+  cdkFocusInitial
+  (click)="submitForm()"
+>
+  Accept
+</button>
+
+
+<img [src]="image">

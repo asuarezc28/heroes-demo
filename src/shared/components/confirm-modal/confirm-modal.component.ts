@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -14,10 +14,10 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './confirm-modal.component.css'
 })
 export class ConfirmModalComponent {
-
+  @Output() confirmDelete = new EventEmitter<boolean>();
 
   submitForm() {
-
+    this.confirmDelete.emit(true);
   }
 
 }

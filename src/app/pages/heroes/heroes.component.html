@@ -2,7 +2,6 @@
   <form
     class="example-form"
     #searchForm="ngForm"
-    (ngSubmit)="onSubmit(searchForm)"
   >
     <div class="search-container">
       <button
@@ -15,8 +14,7 @@
       </button>
       <mat-form-field class="example-full-width">
         <mat-label>Search...</mat-label>
-        <!--<input matInput placeholder="Ex. monitor" name="searchTerm" ngModel /> -->
-        <input matInput type="text" #searchInput />
+        <input (keyup)="search($event)" matInput type="text" #searchInput />
       </mat-form-field>
       <button
         mat-raised-button
@@ -25,14 +23,6 @@
       >
         Search
       </button>
-      <!--- <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        (click)="search()"
-      >
-        Search
-      </button> -->
     </div>
   </form>
 </div>
@@ -41,7 +31,7 @@
   @if (!isLoading) {
   <mat-spinner></mat-spinner>
   } @else { @for (heroe of heroes; track heroe.id) {
-  <mat-card (click)="navigateToDetailPage(heroe)" class="example-card">
+  <mat-card class="example-card">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>{{ heroe.name }}</mat-card-title>
@@ -58,10 +48,3 @@
   <span>No se encontraron resultados</span>
   } }
 </div>
-
-<mat-paginator
-  [length]="totalItems"
-  [pageSize]="itemsPerPage"
-  [pageSizeOptions]="[5, 10, 15]"
-  (page)="onPageChange($event)"
-></mat-paginator>
