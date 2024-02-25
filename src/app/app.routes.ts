@@ -4,6 +4,6 @@ import { HeroesComponent } from './pages/heroes/heroes.component';
 
 
 export const routes: Routes = [
-    { path: '', component: HeroesComponent, pathMatch: 'full' }, //
-    { path: 'heroe', title: "Create or edit heroe", component: CreateEditHeroeComponent },
+    { path: '', title: 'Heroes', component: HeroesComponent, pathMatch: 'full' },
+    { path: 'heroe', title: 'Heroes', component: CreateEditHeroeComponent }
 ];

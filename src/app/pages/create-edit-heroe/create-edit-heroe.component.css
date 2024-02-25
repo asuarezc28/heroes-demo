@@ -1,0 +1,30 @@
+.firstBox {
+    display: flex;
+    flex: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.dataBox {
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonBox {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.fixed-size-image {
+    width: 200px;
+    height: 200px;
+}

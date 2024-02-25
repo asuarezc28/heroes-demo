@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Sanitizer } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { BehaviorSubject, Observable, ReplaySubject, Subject, take } from 'rxjs';
 
 @Injectable({
@@ -15,7 +16,8 @@ export class HeroesService {
   selectedHero$ = this.selectedHero.asObservable();
   heroesList: any[] = [];
   filteredHeroesList: any[] = [];
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private sanitizer: DomSanitizer) {
 
   }
 
@@ -203,7 +205,6 @@ export class HeroesService {
   }
 
   private updateHeroesList(heroes: any[]): void {
-    //this.filteredHeroesList = [...heroes];
     this.heroes.next(heroes);
     localStorage.setItem('heroesList', JSON.stringify(heroes));
   }
@@ -226,8 +227,9 @@ export class HeroesService {
 
   createHero(newHeroe: any) {
     this.heroesList = this.getStoredHeroesList();
-    const newHeroeWithId = { ...newHeroe, id: this.heroesList.length + 1 };
+    const newHeroeWithId = { ...newHeroe, id: (this.heroesList.length + 1).toString()};
     const updatedHeroes = [...this.heroesList, newHeroeWithId];
+    console.log('UPDA', updatedHeroes);
     this.updateAndStoreHeroes(updatedHeroes);
   }
 
@@ -248,6 +250,11 @@ export class HeroesService {
 
   clearSelectedHero() {
     this.selectedHero.next(null);
+  }
+
+  findHeroById(id: string) {
+    const selectedHero = this.heroesList.find((hero: { id: any; }) => hero.id === id);
+    return selectedHero;
   }
 
 

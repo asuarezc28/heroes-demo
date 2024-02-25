@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
 import { SharedModule } from '../../../shared/shared.module';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { HeroesService } from '../../../services/heroes.service';
-import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { HttpClient, HttpClientModule, } from '@angular/common/http';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterOutlet } from '@angular/router';
-import { CreateEditHeroeComponent } from '../create-edit-heroe/create-edit-heroe.component';
 
 @Component({
   selector: 'app-heroes',
   standalone: true,
-  imports: [SharedModule, CreateEditHeroeComponent, FormsModule, MatCardModule, HttpClientModule, MatDialogModule, MatPaginatorModule, MatProgressSpinnerModule, RouterOutlet],
+  imports: [SharedModule, FormsModule, MatCardModule, HttpClientModule, MatDialogModule, MatPaginatorModule, MatProgressSpinnerModule, RouterOutlet],
   providers: [HeroesService, HttpClient],
   templateUrl: './heroes.component.html',
   styleUrl: './heroes.component.css'
@@ -61,6 +60,7 @@ export class HeroesComponent {
           }
         });
         this.router.navigate(['/heroe', { type: 'edit', id: id }]);
+        //this.router.navigate(['/hero/edit', id]);
       } else {
         console.error('Héroe no encontrado');
       }

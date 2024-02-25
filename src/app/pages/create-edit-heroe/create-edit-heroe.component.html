@@ -1,31 +1,36 @@
-<h2>{{ title }} Heroe</h2>
-<form [formGroup]="heroesForm">
-  <mat-form-field>
-    <mat-label>Name:</mat-label>
-    <input matInput formControlName="name" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Alias:</mat-label>
-    <input matInput formControlName="alias" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Power:</mat-label>
-    <input matInput formControlName="power" />
-  </mat-form-field>
-</form>
-<button type="button" mat-raised-button (click)="fileInput.click()">
-  Choose File
-</button>
-<input hidden (change)="onFileSelected($event)" #fileInput type="file" />
-<span class="file-name">{{ selectedFile?.name }}</span>
-<button mat-button mat-dialog-close (click)="cancel()">Cancel</button>
-<button
-  mat-button
-  cdkFocusInitial
-  (click)="submitForm()"
->
-  Accept
-</button>
-
-
-<img [src]="image">
+<div class="firstBox">
+  <div class="dataBox">
+    <h2>{{ title }} Heroe</h2>
+    @if (!isCreate) {
+    <img alt="hero photo" [src]="image" class="fixed-size-image" />
+    }
+    <form [formGroup]="heroesForm" class="form">
+      <mat-form-field>
+        <mat-label>Name:</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Alias:</mat-label>
+        <input matInput formControlName="alias" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Power:</mat-label>
+        <input matInput formControlName="power" />
+      </mat-form-field>
+      <button type="button" mat-raised-button (click)="fileInput.click()">
+        Choose File
+      </button>
+      <input
+        hidden
+        (change)="onFileSelected($event)"
+        #fileInput
+        type="file"
+        accept=".png, .jpg, .jpeg"
+      />
+    </form>
+  </div>
+</div>
+<div class="buttonBox">
+  <button mat-button mat-dialog-close (click)="cancel()">Cancel</button>
+  <button mat-button cdkFocusInitial (click)="submitForm()">Accept</button>
+</div>
