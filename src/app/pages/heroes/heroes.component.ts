@@ -9,6 +9,7 @@ import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterOutlet } from '@angular/router';
+import { Hero } from '../../types/heroes';
 
 @Component({
   selector: 'app-heroes',
@@ -19,10 +20,9 @@ import { Router, RouterOutlet } from '@angular/router';
   styleUrl: './heroes.component.css'
 })
 export class HeroesComponent {
-  heroes: any = [];
-  originalHeroesList: any = [];
+  heroes: Hero[] = [];
+  originalHeroesList: Hero[] = [];
   searchTerm: string = '';
-  filteredCards: any = [];
   isCreate: boolean = false;
   isLoading: boolean = true;
 
@@ -37,40 +37,28 @@ export class HeroesComponent {
 
   loadData(): void {
     this.heroesService.getHeroesFromLocalStorage();
-    this.heroesService.heroes$.subscribe((res: any) => {
+    this.heroesService.heroes$.subscribe((res: Hero[]) => {
       this.heroes = res;
       this.originalHeroesList = res;
     });
-    this.heroesService.isLoading$.subscribe((res: any) => {
+    this.heroesService.isLoading$.subscribe((res: boolean) => {
       this.isLoading = res;
     });
   }
 
 
-  createOrEditHero(isCreate: boolean, id?: any): void {
+  createOrEditHero(isCreate: boolean, id?: string): void {
     if (isCreate) {
       this.router.navigate(['/heroe', { type: 'create' }]);
     } else {
-      const selectedHero = this.originalHeroesList.find((hero: { id: any; }) => hero.id === id);
-      if (selectedHero) {
-        this.heroesService.selectHero(selectedHero);
-        this.heroesService.selectedHero$.subscribe(hero => {
-          if (hero) {
-            console.log('hh', hero);
-          }
-        });
-        this.router.navigate(['/heroe', { type: 'edit', id: id }]);
-        //this.router.navigate(['/hero/edit', id]);
-      } else {
-        console.error('Héroe no encontrado');
-      }
+      this.router.navigate(['/heroe', { type: 'edit', id: id }]);
     }
   }
 
-  deleteHeroe(heroeId: any): void {
+  deleteHeroe(heroeId: string | undefined): void {
     const dialogRef = this.dialog.open(ConfirmModalComponent, {
     });
-    dialogRef.componentInstance.confirmDelete.subscribe((confirmed: any) => {
+    dialogRef.componentInstance.confirmDelete.subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.heroesService.deleteHero(heroeId);
       }

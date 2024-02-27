@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedModule } from '../../../shared/shared.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { SafeUrl } from '@angular/platform-browser';
 import { HeroesService } from '../../../services/heroes.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-edit-heroe',
@@ -20,9 +21,8 @@ import { HeroesService } from '../../../services/heroes.service';
 export class CreateEditHeroeComponent {
   heroesForm: FormGroup;
   title: string = '';
-  image: SafeUrl = '';
-  selectedFile: any = null;
-  blobImg: any = null;
+  image: SafeUrl | undefined;
+  selectedFile!: Blob;
   heroeId: string | null;
   isCreate: boolean = false;
 
@@ -31,7 +31,7 @@ export class CreateEditHeroeComponent {
     private heroesService: HeroesService,
     public fb: FormBuilder) {
     this.heroesForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern('^[a-zA-Z ]*$')]],
+      name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern('^[a-zA-Z ]*$'), this.firstLetterUppercase()]],
       alias: ['', [Validators.required, Validators.maxLength(20), Validators.pattern('^[a-zA-Z ]*$')]],
       power: ['', [Validators.required, Validators.maxLength(20), Validators.pattern('^[a-zA-Z ]*$')]],
     });
@@ -39,14 +39,12 @@ export class CreateEditHeroeComponent {
     this.isCreate = type === 'create';
     this.isCreate ? this.title = 'Create' : this.title = 'Edit';
     this.heroeId = this.route.snapshot.paramMap.get('id');
-
   }
 
   ngOnInit(): void {
     this.heroesService.getHeroesFromLocalStorage();
     if (this.heroeId) {
       const hero = this.heroesService.findHeroById(this.heroeId);
-      console.log('hero', hero);
       this.heroesForm.patchValue({
         name: hero?.name,
         alias: hero?.alias,
@@ -56,14 +54,16 @@ export class CreateEditHeroeComponent {
     }
   }
 
-  imageValidator() {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const file = control.value;
-      debugger;
-      if (!file) {
-        return { 'required': true }; // Devuelve un error si no se ha seleccionado una imagen
+  firstLetterUppercase(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (value && value.length > 0) {
+        const firstLetter = value.charAt(0);
+        if (firstLetter !== firstLetter.toUpperCase()) {
+          return { firstLetterUppercase: true };
+        }
       }
-      return null; // Retorna nulo si la validación pasa
+      return null;
     };
   }
 
@@ -80,9 +80,22 @@ export class CreateEditHeroeComponent {
       } else {
         this.heroesService.editHero(heroe);
       }
-      //this.router.navigate(['/']);
+      const customText: string = this.isCreate ? 'created' : 'edited';
+      Swal.fire({
+        title: customText.charAt(0).toUpperCase() + customText.slice(1),
+        text: `Your hero has been ${customText}.`,
+        icon: "success"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/']);
+        }
+      });
     } else {
-      console.log('Por favor completa correctamente todos los campos del formulario.');
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Complete all fields in the form correctly",
+      });
     }
   }
 
@@ -91,18 +104,8 @@ export class CreateEditHeroeComponent {
     this.router.navigate(['/']);
   }
 
-  onFileSelected_(event: any): void {
-    this.selectedFile = event.target.files[0] ?? null;
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(this.selectedFile);
-    reader.onload = () => {
-      const blob = new Blob([reader.result as ArrayBuffer], { type: this.selectedFile.type });
-      this.blobImg = blob;
-    };
-  }
 
-
-  onFileSelected(event: any) {
+    onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
       const fileType = file.type;
@@ -110,12 +113,16 @@ export class CreateEditHeroeComponent {
         this.selectedFile = file;
         this.uploadImage();
       } else {
-        console.log('Por favor selecciona un archivo JPEG o PNG válido.');
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Please select a valid JPEG or PNG file.",
+        });
       }
     }
   }
 
-  uploadImage() {
+  uploadImage(): void {
     const reader = new FileReader();
     reader.onload = (e: any) => {
       this.image = e.target.result;

@@ -1,23 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Sanitizer } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { BehaviorSubject, Observable, ReplaySubject, Subject, take } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Hero } from '../app/types/heroes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroesService {
 
-  private heroes = new BehaviorSubject<any[]>([]);
+  private heroes = new BehaviorSubject<Hero[]>([]);
   heroes$ = this.heroes.asObservable();
   private isLoading = new BehaviorSubject<boolean>(true);
   isLoading$ = this.isLoading.asObservable();
-  private selectedHero = new BehaviorSubject<any>({});
-  selectedHero$ = this.selectedHero.asObservable();
-  heroesList: any[] = [];
-  filteredHeroesList: any[] = [];
-  constructor(private http: HttpClient,
-    private sanitizer: DomSanitizer) {
+  heroesList: Hero[] = [];
+  constructor(private http: HttpClient) {
 
   }
 
@@ -131,66 +127,6 @@ export class HeroesService {
   }
 
 
-  // getHeroesFromServer(): void {
-  //this.http.get<any>('https://apimocha.com/angularheroes/heroes').subscribe(resp => {
-  //this.heroesList = resp?.heroes;
-  //this.filteredHeroesList = [...this.heroesList];
-  //this.heroes.next(this.heroesList);
-  //});
-  //}
-
-  //getHeroesFromServer_(): void {
-  //const storedHeroesList = localStorage.getItem('heroesList');
-  //if (storedHeroesList) {
-  //this.heroesList = JSON.parse(storedHeroesList);
-  //this.heroes.next(this.heroesList);
-  //} else {
-  //this.heroesList = this.her.heroes;
-  //this.filteredHeroesList = [...this.heroesList];
-  //this.heroes.next(this.heroesList);
-  //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
-  //}
-  //}
-
-  //setLoading(isLoading: boolean) {
-  //this.isLoading.next(isLoading);
-  //}
-
-  //editHeroe(heroeToModify: any) {
-  //const storedHeroesList = localStorage.getItem('heroesList');
-  //if (storedHeroesList) {
-  //this.heroesList = JSON.parse(storedHeroesList);
-  //}
-  //const updatedHeroes = this.heroesList.map(hero =>
-  //hero.id === heroeToModify.id ? heroeToModify : hero
-  //);
-  //this.heroesList = updatedHeroes;
-  //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
-  //this.heroes.next([...this.heroesList]);
-  //}
-
-  //deleteHero(heroId: number) {
-  //const storedHeroesList = localStorage.getItem('heroesList');
-  //if (storedHeroesList) {
-  //this.heroesList = JSON.parse(storedHeroesList);
-  //}
-  //const updatedHeroes = this.heroesList.filter(hero => hero.id !== heroId);
-  //this.heroesList = [...updatedHeroes];
-  //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
-  //this.heroes.next([...this.heroesList]);
-  //}
-
-  //createHeroe(newHeroe: any) {
-  //const storedHeroesList = localStorage.getItem('heroesList');
-  //if (storedHeroesList) {
-  //this.heroesList = JSON.parse(storedHeroesList);
-  //}
-  //const newHeroeWithId = { ...newHeroe, id: this.heroesList.length + 1 };
-  //this.heroesList = [...this.heroesList, newHeroeWithId];
-  //localStorage.setItem('heroesList', JSON.stringify(this.heroesList));
-  //this.heroes.next([...this.heroesList]);
-  //}
-
   getHeroesFromServer(): void {
     this.http.get<any>('https://apimocha.com/angularheroes/heroes').subscribe(resp => {
       this.heroesList = resp?.heroes || [];
@@ -204,7 +140,7 @@ export class HeroesService {
     this.updateHeroesList(this.heroesList);
   }
 
-  private updateHeroesList(heroes: any[]): void {
+  private updateHeroesList(heroes: Hero[]): void {
     this.heroes.next(heroes);
     localStorage.setItem('heroesList', JSON.stringify(heroes));
   }
@@ -213,47 +149,38 @@ export class HeroesService {
     this.isLoading.next(isLoading);
   }
 
-  editHero(heroeToModify: any) {
+  editHero(heroeToModify: Hero) {
     this.heroesList = this.getStoredHeroesList();
     const updatedHeroes = this.heroesList.map(hero => hero.id === heroeToModify.id ? heroeToModify : hero);
     this.updateAndStoreHeroes(updatedHeroes);
   }
 
-  deleteHero(heroId: number) {
+  deleteHero(heroId: string | undefined) {
     this.heroesList = this.getStoredHeroesList();
     const updatedHeroes = this.heroesList.filter(hero => hero.id !== heroId);
     this.updateAndStoreHeroes(updatedHeroes);
   }
 
-  createHero(newHeroe: any) {
+  createHero(newHeroe: Hero) {
     this.heroesList = this.getStoredHeroesList();
-    const newHeroeWithId = { ...newHeroe, id: (this.heroesList.length + 1).toString()};
+    const newHeroeWithId = { ...newHeroe, id: (this.heroesList.length + 1).toString() };
     const updatedHeroes = [...this.heroesList, newHeroeWithId];
-    console.log('UPDA', updatedHeroes);
     this.updateAndStoreHeroes(updatedHeroes);
   }
 
-  private getStoredHeroesList(): any[] {
+  private getStoredHeroesList(): Hero[] {
     const storedHeroesList = localStorage.getItem('heroesList');
     return storedHeroesList ? JSON.parse(storedHeroesList) : [];
   }
 
-  private updateAndStoreHeroes(heroes: any[]): void {
+  private updateAndStoreHeroes(heroes: Hero[]): void {
     this.heroesList = heroes;
     this.updateHeroesList(heroes);
   }
 
-  selectHero(hero: any) {
-    debugger;
-    this.selectedHero.next(hero);
-  }
-
-  clearSelectedHero() {
-    this.selectedHero.next(null);
-  }
 
   findHeroById(id: string) {
-    const selectedHero = this.heroesList.find((hero: { id: any; }) => hero.id === id);
+    const selectedHero = this.heroesList.find((hero: { id: string; }) => hero.id === id);
     return selectedHero;
   }
 

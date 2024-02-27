@@ -13,20 +13,15 @@
         <mat-label>Search...</mat-label>
         <input (keyup)="search($event)" matInput type="text" #searchInput />
       </mat-form-field>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="search(searchInput.value)"
-      >
-        Search
-      </button>
     </div>
   </form>
 </div>
 
 <div class="container">
   @if (!isLoading) {
-  <mat-spinner></mat-spinner>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
   } @else { @for (heroe of heroes; track heroe.id) {
   <mat-card class="example-card">
     <mat-card-header>
@@ -34,7 +29,7 @@
       <mat-card-title>{{ heroe.name }}</mat-card-title>
       <mat-card-subtitle>{{ heroe.alias }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image [src]="heroe?.image" alt="{{ heroe?.alt }}" />
+    <img mat-card-image [src]="heroe?.image"/>
     <mat-card-content> </mat-card-content>
     <mat-card-actions>
       <button (click)="createOrEditHero(false, heroe?.id)" mat-button>
@@ -46,6 +41,6 @@
     </mat-card-actions>
   </mat-card>
   }@empty {
-  <span>No se encontraron resultados</span>
+  <span>No results found</span>
   } }
 </div>

@@ -1,9 +1,3 @@
-//import { HttpInterceptorFn } from '@angular/common/http';
-
-//export const heroesLoadingInterceptor: HttpInterceptorFn = (req, next) => {
-//return next(req);
-//};
-
 import { Injectable } from '@angular/core';
 import {
   HttpEvent,

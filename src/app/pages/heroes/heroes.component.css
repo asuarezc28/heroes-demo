@@ -36,16 +36,10 @@
     flex: 1;
 }
 
-.favorite {
-    color: red;
-}
-
-.radioButtonsBox {
-    display: flex;
-    flex: row;
-    justify-content: center;
-}
-
-.buttonSearch {
+.spinner-container {
+    width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
