@@ -9,9 +9,10 @@
     padding: 20px;
 }
 
-.example-card {
+.card {
     max-width: 400px;
     width: 100%;
+    background-color: white;
 }
 
 .container-search {
@@ -42,4 +43,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.main-box {
+    background-color: #011640;
+}
+
+.heroe-photo {
+    height: 70%;
 }
