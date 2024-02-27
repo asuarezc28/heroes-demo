@@ -16,7 +16,8 @@
     flex-direction: column;
 }
 
-.buttonBox {
+.button-box {
+    margin-top: 1%;
     display: flex;
     width: 100%;
     flex-direction: row;
@@ -49,3 +50,4 @@ h2 {
 .cancel-button {
     background-color: #F2C73F;
 }
+

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateEditHeroeComponent } from './create-edit-heroe.component';
+import { ActivatedRoute } from '@angular/router';
 
 describe('CreateEditHeroeComponent', () => {
   let component: CreateEditHeroeComponent;
@@ -8,7 +9,8 @@ describe('CreateEditHeroeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateEditHeroeComponent]
+      imports: [CreateEditHeroeComponent],
+      providers: [ActivatedRoute]
     })
     .compileComponents();
     

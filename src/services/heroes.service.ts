@@ -23,49 +23,49 @@ export class HeroesService {
         "id": '1',
         "name": "Superman",
         "alias": "Clark Kent",
-        "power": "Super strength, flight, invulnerability",
+        "power": "Super strength",
         "image": "https://i.ibb.co/fQ7PtZb/843d3cc2bea7c8df224e878e8b6326dd.jpg"
       },
       {
         "id": '2',
         "name": "Wonder Woman",
         "alias": "Diana Prince",
-        "power": "Superhuman strength, agility, combat skills",
+        "power": "Superhuman strength",
         "image": "https://i.ibb.co/BP4XNXV/5534efecdb37c4674334477527c3c67d.jpg"
       },
       {
         "id": '3',
         "name": "Spider-Man",
         "alias": "Peter Parker",
-        "power": "Wall-crawling, superhuman strength, spider sense",
+        "power": "Wall-crawling",
         "image": "https://i.ibb.co/vwqb8nk/019a76446d1d41672e83c32d11ffb705.jpg"
       },
       {
         "id": '4',
         "name": "Batman",
         "alias": "Bruce Wayne",
-        "power": "Genius intellect, martial arts skills, gadgets",
+        "power": "Genius intellect",
         "image": "https://i.ibb.co/y6kxdSb/a91c05fd69e22b4ee8e87859e1368137.jpg"
       },
       {
         "id": '5',
         "name": "Iron Man",
         "alias": "Tony Stark",
-        "power": "Powered armor suit, genius inventor",
+        "power": "Powered armor suit",
         "image": "https://i.ibb.co/NKWCfBk/a8716f8f85b1ac5963700d971462c70a.jpg"
       },
       {
         "id": '6',
         "name": "Captain America",
         "alias": "Steve Rogers",
-        "power": "Peak human strength and agility, shield mastery",
+        "power": "Peak human strength",
         "image": "https://i.ibb.co/dQ8W7y4/1941cf28de7db3deeec7d4c6ca935649.jpg"
       },
       {
         "id": '7',
         "name": "Thor",
         "alias": "Thor Odinson",
-        "power": "God of Thunder, superhuman strength, Mjolnir",
+        "power": "God of Thunder",
         "image": "https://i.ibb.co/42CrPjg/2298.jpg"
       }
     ]
@@ -73,8 +73,14 @@ export class HeroesService {
 
 
   getHeroesFromServer(): void {
-    this.http.get<any>('https://apimocha.com/angularheroes/heroes').subscribe(resp => {
-      this.heroesList = resp?.heroes || [];
+    https://apimocha.com/angularheroes/heroe
+    this.http.get<any>('https://apimocha.com/heroesangular/heroes').subscribe(resp => {
+      let storedHeroesList = localStorage.getItem('heroesList');
+      if (storedHeroesList && storedHeroesList !== 'undefined') {
+        this.heroesList = JSON.parse(storedHeroesList);
+      } else {
+        this.heroesList = resp;
+      }
       this.updateHeroesList(this.heroesList);
     });
   }

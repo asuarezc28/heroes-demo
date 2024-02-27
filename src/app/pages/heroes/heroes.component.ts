@@ -10,12 +10,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterOutlet } from '@angular/router';
 import { Hero } from '../../types/heroes';
+import { HeroesLoadingInterceptor } from '../../interceptors/heroes-loading.interceptor';
 
 @Component({
   selector: 'app-heroes',
   standalone: true,
   imports: [SharedModule, FormsModule, MatCardModule, HttpClientModule, MatDialogModule, MatPaginatorModule, MatProgressSpinnerModule, RouterOutlet],
-  providers: [HeroesService, HttpClient],
+  providers: [HeroesService, HttpClient, HeroesLoadingInterceptor],
   templateUrl: './heroes.component.html',
   styleUrl: './heroes.component.css'
 })
@@ -36,7 +37,7 @@ export class HeroesComponent {
   }
 
   loadData(): void {
-    this.heroesService.getHeroesFromLocalStorage();
+    this.heroesService.getHeroesFromServer();
     this.heroesService.heroes$.subscribe((res: Hero[]) => {
       this.heroes = res;
       this.originalHeroesList = res;
