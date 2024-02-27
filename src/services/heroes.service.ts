@@ -67,62 +67,6 @@ export class HeroesService {
         "alias": "Thor Odinson",
         "power": "God of Thunder, superhuman strength, Mjolnir",
         "image": "https://i.ibb.co/42CrPjg/2298.jpg"
-      },
-      {
-        "id": '8',
-        "name": "Black Widow",
-        "alias": "Natasha Romanoff",
-        "power": "Master spy, expert martial artist, agility",
-        "image": ""
-      },
-      {
-        "id": '9',
-        "name": "Hulk",
-        "alias": "Bruce Banner",
-        "power": "Superhuman strength, durability, regeneration",
-        "image": ""
-      },
-      {
-        "id": '10',
-        "name": "Black Panther",
-        "alias": "T'Challa",
-        "power": "Enhanced strength, speed, agility, vibranium suit",
-        "image": ""
-      },
-      {
-        "id": '11',
-        "name": "Captain Marvel",
-        "alias": "Carol Danvers",
-        "power": "Flight, superhuman strength, energy manipulation",
-        "image": ""
-      },
-      {
-        "id": '12',
-        "name": "Flash",
-        "alias": "Barry Allen",
-        "power": "Super speed, time manipulation",
-        "image": ""
-      },
-      {
-        "id": '13',
-        "name": "Green Lantern",
-        "alias": "Hal Jordan",
-        "power": "Power ring, constructs from willpower",
-        "image": ""
-      },
-      {
-        "id": '14',
-        "name": "Aquaman",
-        "alias": "Arthur Curry",
-        "power": "Atlantean physiology, control over sea life",
-        "image": ""
-      },
-      {
-        "id": '15',
-        "name": "Supergirl",
-        "alias": "Kara Zor-El",
-        "power": "light",
-        "image": ""
       }
     ]
 

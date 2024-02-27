@@ -1,6 +1,6 @@
 <div class="firstBox">
   <div class="dataBox">
-    <h2>{{ title }} Heroe</h2>
+    <h2>{{ title }} Hero</h2>
     @if (!isCreate) {
     <img alt="hero photo" [src]="image" class="fixed-size-image" />
     }
@@ -40,8 +40,8 @@
         <mat-error>Invalid characters entered</mat-error>
         }
       </mat-form-field>
-      <mat-label>Photo:</mat-label>
-      <button type="button" mat-raised-button (click)="fileInput.click()">
+      <mat-label class="text-photo">Photo:</mat-label>
+      <button type="button" class="choose-file" mat-raised-button (click)="fileInput.click()">
         Choose File
       </button>
       <input
@@ -55,6 +55,6 @@
   </div>
 </div>
 <div class="buttonBox">
-  <button mat-button mat-dialog-close (click)="cancel()">Cancel</button>
-  <button mat-button cdkFocusInitial (click)="submitForm()">Accept</button>
+  <button class="cancel-button" mat-button mat-dialog-close (click)="cancel()">Cancel</button>
+  <button class="accept-button" mat-button cdkFocusInitial (click)="submitForm()">Accept</button>
 </div>

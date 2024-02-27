@@ -21,10 +21,11 @@
     width: 100%;
 }
 
-.search-container {
+.search-box {
+    margin-top: 3%;
     display: flex;
-    align-items: center;
-    width: 100%;
+    flex-direction: row;
+    width: 50%;
 }
 
 .example-form {
@@ -45,10 +46,19 @@
     align-items: center;
 }
 
-.main-box {
-    background-color: #011640;
+.mat-mdc-raised-button:not(:disabled) {
+    background-color: #F2C73F;
+}
+
+.add-button {
+    height: 72%;
+    margin-right: 1%;
 }
 
 .heroe-photo {
-    height: 70%;
+    height: 80%;
+}
+
+.icon {
+    color : #9FA19D
 }
