@@ -30,20 +30,29 @@
         <mat-card-subtitle>{{ heroe.alias }}</mat-card-subtitle>
       </mat-card-header>
       <img class="heroe-photo" mat-card-image [src]="heroe?.image" />
-      <mat-card-content> </mat-card-content>
-      <mat-card-actions>
-        <button class="action-button" (click)="createOrEditHero(false, heroe?.id)" mat-button>
+      <mat-card-content>
+      </mat-card-content>
+      <div class="button-box">
+        <button
+          class="action-button"
+          (click)="createOrEditHero(false, heroe?.id)"
+          mat-button
+        >
           <mat-icon class="icon">create</mat-icon>
           Edit
         </button>
-        <button class="action-button" mat-button (click)="deleteHeroe(heroe?.id)">
+        <button
+          class="action-button"
+          mat-button
+          (click)="deleteHeroe(heroe?.id)"
+        >
           <mat-icon class="icon">delete</mat-icon>
           Delete
         </button>
-      </mat-card-actions>
+      </div>
     </mat-card>
     }@empty {
-    <span>No results found</span>
+    <span>No results found...</span>
     } }
   </div>
 </div>

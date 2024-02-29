@@ -5,3 +5,7 @@
 .header {
   background-color: #011640;
 }
+
+p.cursiv {font-family: cursive;
+color: white;
+margin-left: 1%;}

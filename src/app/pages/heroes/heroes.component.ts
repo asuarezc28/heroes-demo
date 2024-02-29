@@ -37,14 +37,14 @@ export class HeroesComponent {
   }
 
   loadData(): void {
-    this.heroesService.getHeroesFromServer();
+    this.heroesService.getHeroesFromLocalStorage();
     this.heroesService.heroes$.subscribe((res: Hero[]) => {
       this.heroes = res;
       this.originalHeroesList = res;
     });
-    this.heroesService.isLoading$.subscribe((res: boolean) => {
-      this.isLoading = res;
-    });
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
   }
 
 

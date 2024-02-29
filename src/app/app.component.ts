@@ -6,7 +6,6 @@ import { HeroesComponent } from './pages/heroes/heroes.component';
 import { HeroesService } from '../services/heroes.service';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { HeroesLoadingInterceptor } from './interceptors/heroes-loading.interceptor';
-import { heroeInterceptor } from './interceptors/heroe.interceptor';
 
 @Component({
   selector: 'app-root',

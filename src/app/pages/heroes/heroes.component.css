@@ -62,3 +62,10 @@
 .icon {
     color : #9FA19D
 }
+
+.button-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 5%;
+}
